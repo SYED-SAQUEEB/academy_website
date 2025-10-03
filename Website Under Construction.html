@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Under Construction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0F172A;
+            --accent-gold: #FFD700;
+            --light-sky: #F0F9FF;
+            --dark-text: #1F2937;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--navy) 0%, #2A6093 100%);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .construction-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 20px;
+        }
+        .construction-logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.2));
+        }
+        .construction-container h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 20px;
+        }
+        .construction-container p {
+            font-size: 1.2rem;
+            color: var(--dark-text);
+            margin-bottom: 30px;
+        }
+        .construction-icon {
+            font-size: 5rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        .btn-home {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border: none;
+            color: var(--navy);
+            padding: 0.8rem 2rem;
+            border-radius: 999px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+            color: var(--navy);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @media (max-width: 576px) {
+            .construction-container {
+                padding: 20px;
+            }
+            .construction-container h1 {
+                font-size: 1.8rem;
+            }
+            .construction-container p {
+                font-size: 1rem;
+            }
+            .construction-icon {
+                font-size: 3.5rem;
+            }
+            .construction-logo {
+                max-width: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="construction-container">
+       
+        <i class="fas fa-tools construction-icon"></i>
+        <h1>Website Under Construction</h1>
+        <p>We're working hard to bring you an amazing experience! Our website will be live soon. Thank you for your patience.</p>
+        <a href="index.html" class="btn btn-home">Back to Home</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

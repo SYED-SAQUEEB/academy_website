@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIT Academy - Courses</title>
+       <!-- Favicon -->
+   <!-- Favicon Icon (32x32, with round background) -->
+<link rel="icon" 
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23000000'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' font-weight='bold' fill='%23FFFFFF'%3EAIT%3C/text%3E%3C/svg%3E">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <style>
+        :root{
+            --navy: #0F172A; /* Deeper navy */
+            --accent-gold: #FFD700; /* Bright gold */
+            --light-sky: #F0F9FF; /* Very light blue */
+            --dark-text: #1F2937; /* Dark gray for text on light backgrounds */
+            --mid-gray-text: #4B5563; /* Medium gray for muted text */
+            --gradient-dark-blue: linear-gradient(180deg, #102A43 0%, #243B53 100%);
+            --gradient-glass-dark: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+            --gradient-glass-light: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8));
+            --course-card-bg: #FFFFFF; /* White background for course cards */
+            --course-card-border: #E0E0E0; /* Light border for course cards */
+            --course-card-shadow: rgba(0,0,0,0.08); /* Subtle shadow */
+            --course-card-hover-shadow: rgba(0,0,0,0.15); /* More prominent shadow on hover */
+        }
+        body{
+            font-family: 'Lato', sans-serif;
+            background: var(--gradient-dark-blue);
+            color: #E2E8F0; /* Light text for dark backgrounds */
+            -webkit-font-smoothing:antialiased;
+            overflow-x: hidden; /* Prevent horizontal scroll from AOS or overflow */
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            color: #FFFFFF; /* Default heading color on dark background */
+        }
+        .section-light h2, .section-light h3, .section-light h4, .section-light h5 {
+            color: var(--navy); /* Heading color on light background */
+        }
+        p {
+            color: #CBD5E0; /* Default paragraph color on dark background */
+        }
+        .section-light p {
+            color: var(--mid-gray-text); /* Paragraph color on light background */
+        }
+        a { text-decoration: none; transition: color 0.3s ease; }
+        a:hover { color: var(--accent-gold); }
+
+        /* Header */
+        .site-header{
+            background: rgba(244, 244, 244, 0.7); /* Slightly transparent dark blue */
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .logo-wrap img{ height:68px; filter: drop-shadow(0 0 5px var(--accent-white)); }
+        .site-header .nav-link {
+            color: #0A192F;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .site-header .nav-link:hover {
+            background-color: #0A192F;
+            color: var(--accent-navy);
+        }
+        .btn-outline-light {
+            border-color: #0A192F;
+            color: #0A192F;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-outline-light:hover {
+            background-color: var(--accent-gold);
+            color: var(--navy);
+            border-color: var(--accent-gold);
+        }
+
+        /* HERO */
+        .hero{
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+            background: url('http://googleusercontent.com/file_content/0') no-repeat center center/cover;
+            background-blend-mode: multiply; /* Blend mode for better color control */
+            background-color: rgba(16, 42, 67, 0.6); /* Dark overlay */
+            filter: brightness(0.9) grayscale(0.1); /* Adjusted brightness and less grayscale */
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(16, 42, 67, 0.9) 0%, rgba(16, 42, 67, 0.5) 50%, rgba(16, 42, 67, 0.1) 100%); /* Adjusted gradient transparency */
+            z-index: 1;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-left h1{
+            font-size: clamp(2.5rem, 5vw, 4rem); /* Responsive font size */
+            line-height: 1.1;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+        }
+        .hero-left p {
+            color: #B0D9EE;
+            font-size: 1.15rem;
+            margin-top:1rem;
+            max-width:720px;
+        }
+        .btn-cta {
+            background: linear-gradient(90deg, #3B82F6, #9F7AEA); /* Blue to Purple gradient */
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            font-weight:600;
+            box-shadow: 0 8px 30px rgba(59,130,246,0.25);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .btn-cta:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(59,130,246,0.35);
+        }
+        .hero .btn-outline-light {
+             background: transparent;
+             border: 2px solid #E2E8F0;
+             color: #E2E8F0;
+             font-weight: 600;
+             padding: 0.75rem 2rem;
+             border-radius: 999px;
+             transition: all 0.3s ease;
+        }
+        .hero .btn-outline-light:hover {
+            background-color: #E2E8F0;
+            color: var(--navy);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        /* floating icons */
+        .floating {
+            position: absolute;
+            font-size: clamp(2rem, 4vw, 3rem); /* Responsive icon size */
+            opacity: 0.08;
+            filter: drop-shadow(0 6px 20px rgba(0,0,0,0.5));
+            animation: bob 6s ease-in-out infinite;
+            color: #fff;
+        }
+        .floating.slow{ animation-duration: 9s; }
+        @keyframes bob { 0%,100%{ transform: translateY(0) rotate(0deg);} 50%{ transform: translateY(-18px) rotate(5deg);} }
+
+        /* glass cards */
+        .glass {
+            background: var(--gradient-glass-dark);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 14px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        .glass:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+        }
+        .search-bar {
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 0.7rem 1.2rem;
+            border: 2px solid var(--accent-gold);
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        .search-bar input:focus {
+            border-color: #FFA500;
+        }
+        .course-card {
+            background-color: var(--course-card-bg);
+            border: 1px solid var(--course-card-border);
+            border-radius: 12px;
+            box-shadow: 0 6px 20px var(--course-card-shadow);
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .course-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 12px 30px var(--course-card-hover-shadow);
+        }
+        .course-card .card-img-top {
+            border-radius: 8px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            height: 180px;
+            width: 100%;
+        }
+        .course-card .card-icon {
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+        .course-card .card-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+        .course-card .card-description {
+            font-size: 0.95rem;
+            color: var(--dark-text);
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+        .course-card .card-duration {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+        .course-card .syllabus-list {
+            text-align: left;
+            font-size: 0.88rem;
+            color: var(--dark-text);
+            margin-top: 15px;
+            padding-left: 0;
+            list-style: none;
+        }
+        .course-card .syllabus-list li {
+            margin-bottom: 5px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .course-card .syllabus-list li i {
+            color: #28a745;
+            margin-right: 8px;
+            margin-top: 3px;
+        }
+        .accordion-body {
+            background-color: #f8f8f8;
+            border-radius: 0 0 12px 12px;
+            border-top: 1px solid #eee;
+            padding-top: 15px !important;
+        }
+        .accordion-button.btn-syllabus {
+            background: linear-gradient(90deg, #60A5FA, #3B82F6);
+            color: white;
+            font-weight: 600;
+            border-radius: 999px;
+            padding: 0.7rem 1.8rem;
+            box-shadow: 0 4px 10px rgba(59,130,246,0.2);
+            transition: all 0.3s ease;
+            width: fit-content;
+            margin: 0 auto;
+        }
+        .accordion-button.btn-syllabus:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(59,130,246,0.3);
+        }
+        .accordion-button.btn-syllabus:not(.collapsed) {
+            background: linear-gradient(90deg, #3B82F6, #60A5FA);
+            color: white;
+        }
+        .accordion-button:focus {
+            box-shadow: 0 0 0 0.25rem rgba(59,130,246,0.25);
+            border-color: #3B82F6;
+        }
+        .course-card .btn-learn-more, .course-card .btn-study-course {
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+            border: none;
+            color: var(--navy);
+            padding: 0.7rem 1.8rem;
+            border-radius: 999px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.2);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            align-self: center;
+            margin-top: 10px;
+        }
+        .course-card .btn-learn-more:hover, .course-card .btn-study-course:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,215,0,0.3);
+            color: var(--navy);
+        }
+        footer {
+            background: linear-gradient(to right, white, white, skyblue, skyblue);
+            color: #111;
+            padding: 40px 0;
+        }
+        footer h5 {
+            color: #111;
+            margin-bottom: 20px;
+        }
+        footer a {
+            color: #111;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #FFD700;
+        }
+        .copyright {
+            background: #111;
+            padding: 10px;
+            text-align: center;
+            color: #111;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 767px) {
+            .hero-syllabus { padding: 50px 0; }
+            .hero-syllabus h1 { font-size: 2rem; }
+            .hero-syllabus p { font-size: 1rem; }
+            .course-card { padding: 20px; }
+            .course-card .card-title { font-size: 1.4rem; }
+            .course-card .card-description { font-size: 0.85rem; }
+            .course-card .syllabus-list { font-size: 0.8rem; }
+            .accordion-button.btn-syllabus { padding: 0.6rem 1.5rem; }
+            .course-card .btn-learn-more, .course-card .btn-study-course { padding: 0.6rem 1.5rem; }
+            .search-bar { max-width: 100%; }
+        }
+         /* Social Media Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding: 1rem 0;
+        }
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .social-icons a:hover {
+            transform: translateY(-4px) rotate(10deg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        .social-icons a:hover::before {
+            left: 100%;
+        }
+        .social-icons .icon-instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+        .social-icons .icon-facebook {
+            background: #1877F2;
+        }
+        .social-icons .icon-linkedin {
+            background: #0077B5;
+        }
+        .social-icons .icon-twitter {
+            background: #000000;
+        }
+        /* Bouncing Animation for Social Icons */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .social-icons a:nth-child(1) { animation: bounce 2s ease infinite 0.2s; }
+        .social-icons a:nth-child(2) { animation: bounce 2s ease infinite 0.4s; }
+        .social-icons a:nth-child(3) { animation: bounce 2s ease infinite 0.6s; }
+        .social-icons a:nth-child(4) { animation: bounce 2s ease infinite 0.8s; }
+        /* Responsive Adjustments for Social Icons */
+        @media (max-width: 640px) {
+            .social-icons a {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+    <!-- Header -->
+    <header class="site-header py-3">
+        <div class="container d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-3 logo-wrap">
+                <img src="img/New_Ait_Logo.png" alt="AIT Logo (replace path)" />
+               
+            </div>
+ <!-- Desktop Nav -->
+    <nav class="d-none d-md-flex align-items-center gap-3">
+      <a class="nav-link px-2 py-1" href="index.html">Home</a>
+      <a class="nav-link px-2 py-1" href="About AIT.html">About Us</a>
+      <a class="nav-link px-2 py-1" href="AIT Courses.html">Courses</a>
+      <a class="nav-link px-2 py-1" href="AITSyllabus.html">Syllabus</a>
+      <a class="nav-link px-2 py-1" href="https://docs.google.com/forms/d/e/1FAIpQLSf9HnApVLCZcD2fW4zsMcFSjC52jMZEJF1RtSzrTumoYKGCRQ/viewform" target="_blank">Admission</a>
+      <a class="nav-link px-2 py-1" href="https://aitaurangabad.com/UserPanel/Login.aspx" target="_blank">Student Login</a>
+      <a class="nav-link px-2 py-1" href="Exam.html">Exam</a>
+      <a class="nav-link px-2 py-1" href="Website Under Construction.html">Gallery</a>
+      <a class="btn btn-sm btn-outline-primary px-3 py-1 rounded-pill" href="Contact Us.html">Contact</a>
+    </nav>
+
+    <!-- Mobile Toggle -->
+    <button class="btn d-md-none p-2 border-0 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu" aria-controls="mobileMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars fs-4 text-dark"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div class="collapse d-md-none bg-white border-top" id="mobileMenu">
+    <nav class="d-flex flex-column p-2">
+       <a href="About AIT.html" class="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">About Us</a>
+            <a href="AIT Courses.html" class="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">Courses</a>
+            <a href="AITSyllabus.html" class="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">Syllabus</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9HnApVLCZcD2fW4zsMcFSjC52jMZEJF1RtSzrTumoYKGCRQ/viewform" class="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">Admission</a>
+            <a href="https://aitaurangabad.com/UserPanel/Login.aspx" class="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">Student Login</a>
+            <a href="Exam.html" class="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">Exam</a>
+            <a href="Website Under Construction.html" class="p-2 rounded-md hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200">Gallery</a>
+            <a href="Contact Us.html" class="p-2 rounded-md bg-slate-100 border border-slate-200 hover:bg-slate-200 transition-all duration-200">Contact</a>
+    </nav>
+  </div>
+    </header>
+
+    <!-- HERO Section - Reused from About Page with Course-specific content -->
+    <section class="hero d-flex align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-left" data-aos="fade-right">
+                    <h1>Unlock Your Potential with Our <span style="color:var(--accent-gold)">Cutting-Edge Courses</span></h1>
+                    <p class="mt-3">Explore a diverse range of programs designed to equip you with in-demand skills and launch a successful career in the fast-evolving tech industry.</p>
+                    <div class="mt-4 d-flex flex-column flex-sm-row gap-3">
+                        <a href="#course-listing" class="btn btn-cta">View All Courses</a>
+                        <a href="contact.html" class="btn btn-outline-light">Inquire Now</a>
+                    </div>
+                    <div class="mt-4 d-flex flex-column flex-sm-row gap-3">
+                        <small style="color:#B0D9EE;"><i class="fas fa-certificate me-2"></i> Industry-Recognized Certifications</small>
+                        <small style="color:#B0D9EE;"><i class="fas fa-users-cog me-2"></i> Expert-Led Practical Training</small>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="glass mt-5 mt-lg-0">
+                        <img src="img/Course page hero section img.png" alt="Hero classroom image" class="img-fluid rounded" />
+                        <div class="mt-3 d-flex gap-2">
+                            <div class="glass p-2" style="flex:1">
+                                <small style="color:#CBD5E0">15+</small><div style="font-weight:700">Specialized Tracks</div>
+                            </div>
+                            <div class="glass p-2" style="flex:1">
+                                <small style="color:#CBD5E0">Job-Ready</small><div style="font-weight:700">Curriculum</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating icons -->
+        <i class="fas fa-code floating" style="top:10%;right:6%;"></i>
+        <i class="fas fa-database floating slow" style="top:25%;left:6%;"></i>
+        <i class="fas fa-cloud floating" style="bottom:12%;left:12%;"></i>
+        <i class="fas fa-chart-line floating slow" style="top:40%;right:30%;"></i>
+    </section>
+
+<!--search section-->
+ <div class="search-bar mt-4">
+            <input type="text" id="courseSearch" placeholder="Search Courses..." aria-label="Search Courses">
+        </div>
+<!-- Courses Section -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="text-center fw-bold mb-5" data-aos="fade-up">Our Courses & Syllabus</h2>
+        <div class="row g-4" id="courses-container"></div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="main-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+<img src="img/New_Ait_Logo.png" alt="" width="150px">   
+             <p style="color: #000000;">Empowering the next generation of IT professionals with practical skills and industry-aligned training.</p>
+                 
+       <div class="social-icons">
+        <a href="#" class="icon-instagram" aria-label="Instagram">
+            <svg xmlns="https://www.instagram.com/a.i.t.aurangabad/" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849s-.012 3.584-.069 4.849c-.148 3.228-1.667 4.771-4.919 4.919-1.266.058-1.645.069-4.849.069s-3.584-.012-4.849-.069c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.849s.012-3.584.069-4.849c.148-3.228 1.667-4.771 4.919-4.919 1.266-.058 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.073 4.948c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.948-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.073-4.948c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+        </a>
+        <a href="#" class="icon-facebook" aria-label="Facebook">
+            <svg xmlns="https://www.facebook.com/p/AIT-Academy-of-Infomation-Technology-61553413495331/" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+            </svg>
+        </a>
+        <a href="#" class="icon-linkedin" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.327-.024-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.048c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+        </a>
+        <a href="#" class="icon-twitter" aria-label="Twitter">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-6 h-6">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+        </a>
+    </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-4 mb-lg-0">
+                <h5 class="mb-3">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="About AIT.html">About Us</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="footerCoursesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Courses
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="footerCoursesDropdown">
+                            <li><a class="dropdown-item" href="course.html">All Courses</a></li>
+                            <li><a class="dropdown-item" href="diploma-programs.html">Diploma Programs</a></li>
+                            <li><a class="dropdown-item" href="programming-courses.html">Programming & Web</a></li>
+                            <li><a class="dropdown-item" href="cloud-computing.html">Cloud Computing</a></li>
+                            <li><a class="dropdown-item" href="data-science.html">Data Science</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="Syllabus.html">Syllabus</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSf9HnApVLCZcD2fW4zsMcFSjC52jMZEJF1RtSzrTumoYKGCRQ/viewform">Admission</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://aitaurangabad.com/UserPanel/Login.aspx">Student Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Exam.html">Exam</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                <h5 class="mb-3">Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Opp Rehmaniya Masjid , Lane 6
+                                                                                Azad Chowk Rd, Rahemania Colony
+                                                                                Aurangabad - 431003
+                                                                                Maharashtra, INDIA</li>
+                    <li class="mb-2"><i class="fas fa-phone me-2"></i> +91 9890579628</li>
+                    <li class="mb-2"><i class="fas fa-phone me-2"></i> +91 9766866239</li>
+                    <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@aitaurangabad.com</li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <h5 class="mb-3">Newsletter</h5>
+                <p>Stay updated with our latest courses and news.</p>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" placeholder="Your Email" aria-label="Your Email" aria-describedby="button-addon2">
+                    <button class="btn btn-warning" type="button" id="button-addon2">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5 pt-3 border-top border-secondary-subtle">
+            <p style="color: #000000;" class="mb-0 small">&copy; <span id="footerYear"></span> AIT Academy of Information Technology. All rights reserved.</p>
+            <p style="color: #000000;" class="mb-0 small mt-1">Privacy Policy | Terms of Service</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 900,
+        once: true,
+    });
+
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+    const courses = [
+        {
+            title: "Diploma in Software Development (DSD-06)",
+            desc: "A foundational diploma covering essential programming languages and web technologies, preparing you for entry-level roles.",
+            duration: "6 months",
+            img: "img/Diploma in Software Development (DSD-06).png",
+            icon: "fas fa-laptop-code",
+            syllabus: ["C Programming Basics", "C++ for OOP", "Core Java Fundamentals", "SQL Database Essentials", "C# Basics", "HTML & CSS for Web Design", "JavaScript for Interactivity"],
+            studyLink: "https://aitaurangabad.com/syllabus/Academy_of_Information_Technology_DSD6.pdf"
+        },
+        {
+            title: "Diploma in Software Development (DSD-12)",
+            desc: "An extensive diploma covering core programming, web development, and advanced frameworks for comprehensive skill-building.",
+            duration: "12 months",
+            img: "img/Diploma in Software Development (DSD-12).png",
+            icon: "fas fa-code-branch",
+            syllabus: ["C, C++, Java, SQL, C#", "HTML, CSS, JavaScript", "ASP.NET Web Forms", "ASP.NET MVC Framework", "Bootstrap Responsive Design", "AngularJS Development"],
+            studyLink: "https://aitaurangabad.com/syllabus/DSD12%20v3.0%20Academy%20of%20Information%20Technology%20(AIT).pdf"
+        },
+        {
+            title: "Diploma in Software Development (DSD-12 v3.0)",
+            desc: "Our most advanced software development diploma, integrating popular backend and frontend technologies for full-stack expertise.",
+            duration: "12 months",
+            img: "img/Diploma in Software Development (DSD-12 v3.0).png",
+            icon: "fas fa-star",
+            syllabus: ["C, C++, SQL, C#", "HTML, CSS, JavaScript", "ASP.NET, MVC", "PHP, MySQL Database", "Bootstrap", "AngularJS"],
+            studyLink: "https://aitaurangabad.com/courses/dsd-12-v3"
+        },
+        {
+            title: "Data Science Professional",
+            desc: "Comprehensive training in data analysis, visualization, and advanced tools for a thriving career in data science.",
+            duration: "6 months",
+            img: "img/Data Science Professional.png",
+            icon: "fas fa-chart-line",
+            syllabus: ["Advanced Excel for Data Analysis", "SQL for Data Management", "Python for Data Science", "Power BI for Business Intelligence", "Tableau for Data Visualization"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        {
+            title: "MERN Stack Development",
+            desc: "Become a full-stack developer mastering MongoDB, Express.js, React.js, and Node.js, complemented by essential web technologies.",
+            duration: "6 months",
+            img: "img/MERN Stack Development.png",
+            icon: "fas fa-cubes",
+            syllabus: ["Python Programming", "HTML & CSS", "JavaScript Essentials", "Bootstrap Framework", "React JS Development", "MongoDB Database Management"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        {
+            title: "Diploma in Cloud Computing with AI (DCC+AI)",
+            desc: "An intensive diploma program combining advanced cloud computing with Artificial Intelligence for holistic tech expertise.",
+            duration: "12 months",
+            img: "img/Diploma in Cloud Computing with AI (DCC+AI).png",
+            icon: "fas fa-cloud",
+            syllabus: ["PC Support Skills & Operating Systems", "Network Essentials & Windows Server", "Linux Administration", "CCNA [Routing & Switching]", "AWS Cloud Computing", "Artificial Intelligence"],
+            studyLink: "https://aitaurangabad.com/DCA/Module1/login.aspx?returnUrl=%2FDCA%2FModule1%2FIndex.html"
+        },
+        {
+            title: "Cybersecurity Professional",
+            desc: "Become an expert in network security, ethical hacking, and advanced defense strategies to protect digital assets.",
+            duration: "6 months",
+            img: "img/Cybersecurity Professional.png",
+            icon: "fas fa-shield-alt",
+            syllabus: ["Linux and Network Security Introduction", "Cybersecurity Essentials", "Cybersecurity Advanced Concepts"],
+            studyLink: "https://aitaurangabad.com/cybersecurity/Index.html"
+        },
+        {
+            title: "CCNA Training v1.1",
+            desc: "Prepare for Cisco CCNA certification and master networking concepts, routing, and switching.",
+            duration: "3 months",
+            img: "img/CCNA Training v1.1.png",
+            icon: "fas fa-network-wired",
+            syllabus: ["CCNA - Intermediate Networking", "CCNA – Routing & Switching Configuration"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        {
+            title: "Linux Administration",
+            desc: "Master both basic and advanced Linux administration techniques for system management and server operations.",
+            duration: "3 months",
+            img: "img/Linux Administration.png",
+            icon: "fab fa-linux",
+            syllabus: ["Basic Linux Commands & File Systems", "Advanced Linux System Management"],
+            studyLink: "https://aitaurangabad.com/Linux/Index.html"
+        },
+        {
+            title: "AWS Cloud Associate",
+            desc: "Gain practical skills in cloud computing fundamentals and Amazon Web Services administration.",
+            duration: "3 months",
+            img: "img/AWS Cloud Associate.png",
+            icon: "fab fa-aws",
+            syllabus: ["Basics of Cloud Computing", "AWS Cloud Administration & Services"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        {
+            title: "Azure Cloud Administrator",
+            desc: "Administer and manage Microsoft Azure cloud services effectively for scalable solutions.",
+            duration: "3 months",
+            img: "img/Azure Cloud Administrator.png",
+            icon: "fas fa-cloud-azure",
+            syllabus: ["Basics of Azure Cloud Computing", "Azure Cloud Administration & Management"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        {
+            title: "Learn C Language",
+            desc: "Master the fundamentals of C programming, essential for system programming and competitive coding.",
+            duration: "2 months",
+            img: "img/C & C++ Programming.png",
+            icon: "fas fa-cogs",
+            syllabus: ["C Language Basics", "Pointers", "Arrays and Strings", "Functions", "File I/O"],
+            studyLink: "https://aitaurangabad.com/C/index.HTML"
+        },
+        {
+            title: "Learn C++",
+            desc: "Advance your programming skills with C++, focusing on object-oriented concepts and data structures.",
+            duration: "3 months",
+            img: "img/C & C++ Programming.png",
+            icon: "fas fa-code",
+            syllabus: ["Introduction to C++", "Classes and Objects", "Inheritance", "Polymorphism", "Templates", "Exception Handling"],
+            studyLink: "https://aitaurangabad.com/CPP/login.aspx?returnUrl=%2FCPP%2FIndex.html"
+        },
+        {
+            title: "Learn Java",
+            desc: "Comprehensive training in Core Java for robust application development and foundational enterprise skills.",
+            duration: "4 months",
+            img: "img/Core Java Development.png",
+            icon: "fab fa-java",
+            syllabus: ["Java Basics", "OOPs Concepts", "Collections Framework", "Exception Handling", "Multithreading", "JDBC"],
+            studyLink: "https://aitaurangabad.com/java/index.html"
+        },
+        {
+            title: "Learn C# (Windows Application)",
+            desc: "Develop robust Windows desktop applications using C# and the .NET framework.",
+            duration: "4 months",
+            img: "img/C_sharp- Development.png",
+            icon: "fas fa-desktop",
+            syllabus: ["C# Basics & Syntax", "Windows Forms Development", "WPF (Windows Presentation Foundation)", "LINQ & Data Access", "Deployment"],
+            studyLink: "https://aitaurangabad.com/csharp/Index.html"
+        },
+        {
+            title: "Learn HTML",
+            desc: "Master the fundamental markup language for creating structured and meaningful web page content.",
+            duration: "1 month",
+            img: "img/HTML & CSS Web Essentials.png",
+            icon: "fab fa-html5",
+            syllabus: ["HTML5 Structure & Semantic Tags", "Forms & Input Types", "Multimedia Elements", "Accessibility Basics"],
+            studyLink: "https://aitaurangabad.com/HTML/Index.html"
+        },
+        {
+            title: "Learn CSS",
+            desc: "Style and design engaging web pages with Cascading Style Sheets, mastering modern layout techniques.",
+            duration: "1 month",
+            img: "img/HTML & CSS Web Essentials.png",
+            icon: "fab fa-css3-alt",
+            syllabus: ["CSS Selectors & Properties", "Box Model & Positioning", "Flexbox for Layouts", "CSS Grid", "Transitions & Animations"],
+            studyLink: "https://aitaurangabad.com/CSS1/Index.html"
+        },
+        {
+            title: "Learn JavaScript",
+            desc: "Enable interactive features and dynamic content on your web pages, from basics to modern concepts.",
+            duration: "2 months",
+            img: "img/Learn JavaScript.jpg",
+            icon: "fab fa-js-square",
+            syllabus: ["JavaScript Fundamentals", "DOM Manipulation", "Event Handling", "AJAX & Fetch API", "ES6+ Features"],
+            studyLink: "https://aitaurangabad.com/javascript2/Index.html"
+        },
+        {
+            title: "Learn ASP.NET",
+            desc: "Build powerful web applications using Microsoft's ASP.NET platform for server-side development.",
+            duration: "3 months",
+            img: "img/ASP.NET & MVC Framework.png",
+            icon: "fas fa-globe",
+            syllabus: ["ASP.NET Web Forms Basics", "Server Controls", "State Management", "Data Binding", "Configuration"],
+            studyLink: "https://aitaurangabad.com/AspDotNet.aspx"
+        },
+        {
+            title: "Learn ASP.NET MVC",
+            desc: "Deep dive into the Model-View-Controller architectural pattern for robust and maintainable ASP.NET web apps.",
+            duration: "3 months",
+            img: "img/ASP.NET & MVC Framework.png",
+            icon: "fas fa-layer-group",
+            syllabus: ["MVC Architecture Fundamentals", "Routing", "Controllers and Views (Razor)", "Models and Data Validation", "Entity Framework Integration"],
+            studyLink: "https://aitaurangabad.com/courses/asp-net-mvc"
+        },
+        {
+            title: "Learn PHP",
+            desc: "Power dynamic web development with server-side scripting using PHP, integrated with databases.",
+            duration: "3 months",
+            img: "img/PHP & MySQL Web Development.png",
+            icon: "fab fa-php",
+            syllabus: ["PHP Basics & Syntax", "Forms Handling", "Database Connectivity (MySQL)", "Sessions & Cookies", "Error Handling & Security"],
+            studyLink: "https://aitaurangabad.com/PHP/Index.HTML"
+        },
+        {
+            title: "Learn MySQL",
+            desc: "Efficient database management with the popular open-source MySQL for web and application data.",
+            duration: "2 months",
+            img: "img/PHP & MySQL Web Development.png",
+            icon: "fas fa-database",
+            syllabus: ["MySQL Installation & Setup", "Database Design Principles", "SQL Commands (CRUD)", "Joins & Subqueries", "Indexing & Optimization"],
+            studyLink: "https://aitaurangabad.com/PHP/Index.HTML"
+        },
+        {
+            title: "Learn Bootstrap",
+            desc: "Quickly build responsive and mobile-first websites using the industry-standard Bootstrap framework.",
+            duration: "1 month",
+            img: "img/Responsive Design with Bootstrap.png",
+            icon: "fab fa-bootstrap",
+            syllabus: ["Bootstrap Grid System", "Pre-built Components (Navbar, Carousel, Cards)", "Utility Classes", "Customization"],
+            studyLink: "https://aitaurangabad.com/Bootstrap/login.aspx?returnUrl=%2FBootstrap%2Findex.HTML"
+        },
+        {
+            title: "Learn AngularJS",
+            desc: "Develop dynamic, single-page web applications with Google's powerful AngularJS framework.",
+            duration: "3 months",
+            img: "img/AngularJS Development.png",
+            icon: "fab fa-angular",
+            syllabus: ["AngularJS Core Concepts", "$scope & Data Binding", "Directives", "Services & Factories", "Routing & Views"],
+            studyLink: "https://aitaurangabad.com/AngularJS/login.aspx?returnUrl=%2FAngularJS%2FIndex.html"
+        },
+        {
+            title: "Learn Data Structures",
+            desc: "Essential course for efficient algorithm design and problem-solving in programming, primarily using C.",
+            duration: "3 months",
+            img: "img/Data Structures & Algorithms.png",
+            icon: "fas fa-sitemap",
+            syllabus: ["Arrays, Linked Lists (Singly, Doubly, Circular)", "Stacks & Queues", "Trees (Binary, BST, AVL)", "Graphs", "Sorting Algorithms", "Searching Algorithms"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        {
+            title: "Learn Angular-Ts",
+            desc: "Develop robust single-page applications using the modern Angular framework with TypeScript.",
+            duration: "4 months",
+            img: "img/Angular with TypeScript.png",
+            icon: "fab fa-angular",
+            syllabus: ["TypeScript Fundamentals", "Angular CLI", "Components & Modules", "Routing", "Services & Dependency Injection", "Forms & Validation"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        {
+            title: "Learn AI with Python",
+            desc: "Develop AI solutions and machine learning models using Python, from theory to practical implementation.",
+            duration: "5 months",
+            img: "img/Artificial Intelligence with Python.png",
+            icon: "fas fa-robot",
+            syllabus: ["Python for AI", "Machine Learning Algorithms (Supervised, Unsupervised)", "Deep Learning Basics (Neural Networks)", "Natural Language Processing (NLP)", "Computer Vision Fundamentals"],
+            studyLink: "https://aitaurangabad.com/Python/login.aspx?returnUrl=%2FPython%2Findex.HTML"
+        },
+        {
+            title: "Learn ReactJS",
+            desc: "Build modern, interactive user interfaces with ReactJS, focusing on component-based development.",
+            duration: "3 months",
+            img: "img/Learn ReactJS.jpg",
+            icon: "fab fa-react",
+            syllabus: ["React Basics", "Components & Props", "State and Lifecycle", "Handling Events", "Conditional Rendering & Lists", "Forms"],
+            studyLink: "https://aitaurangabad.com/courses/reactjs"
+        },
+        {
+            title: "Learn React",
+            desc: "Comprehensive React ecosystem training, including advanced topics like state management and routing.",
+            duration: "3 months",
+            img: "img/Learn React.png",
+            icon: "fab fa-react",
+            syllabus: ["React Fundamentals", "React Router for Navigation", "State Management with Redux/Context API", "React Hooks", "API Integration"],
+            studyLink: "https://aitaurangabad.com/courses/react"
+        },
+        {
+            title: "Learn Android",
+            desc: "Build native Android applications from scratch, covering UI/UX design, data storage, and API integration.",
+            duration: "4 months",
+            img: "img/Android App Development.png",
+            icon: "fab fa-android",
+            syllabus: ["Android Studio Setup", "Activity Lifecycle", "UI/UX Design with XML", "Data Storage (SQLite, Shared Preferences)", "Networking & API Calls", "Publishing Apps"],
+            studyLink: "https://aitaurangabad.com/courses/android"
+        },
+        {
+            title: "Learn TESTING (Software Testing)",
+            desc: "Acquire skills in manual and automated software testing methodologies to ensure high-quality software delivery.",
+            duration: "3 months",
+            img: "img/Software Testing Professional.png",
+            icon: "fas fa-vial",
+            syllabus: ["Software Testing Fundamentals", "Test Case Design Techniques", "Manual Testing (Black-Box, White-Box)", "Introduction to Automation Testing", "Defect Management & Reporting"],
+            studyLink: "https://aitaurangabad.com/courses/software-testing"
+        },
+        {
+            title: "Learn Windows Admin",
+            desc: "Manage and maintain Windows Server environments, including user management, networking, and security configurations.",
+            duration: "3 months",
+            img: "img/Windows Server Administration.png",
+            icon: "fas fa-server",
+            syllabus: ["Windows Server Installation & Configuration", "Active Directory Domain Services", "Group Policy Management", "DNS & DHCP Services", "File & Print Services"],
+            studyLink: "https://aitaurangabad.com/courses/windows-admin"
+        },
+        {
+            title: "Learn Cloud (General Concepts)",
+            desc: "Understand core cloud computing concepts, deployment models, and service offerings across various providers.",
+            duration: "3 months",
+            img: "img/Cloud Computing.jpg",
+            icon: "fas fa-cloud",
+            syllabus: ["Introduction to Cloud Computing", "Cloud Service Models (IaaS, PaaS, SaaS)", "Cloud Deployment Models (Public, Private, Hybrid)", "Virtualization", "Cloud Security Fundamentals"],
+            studyLink: "https://aitaurangabad.com/courses/cloud-concepts"
+        },
+        {
+            title: "Learn Frontend Development",
+            desc: "Comprehensive front-end development including HTML, CSS, JavaScript, and an introduction to popular frameworks.",
+            duration: "5 months",
+            img: "img/Learn Frontend Development.png",
+            icon: "fas fa-code",
+            syllabus: ["HTML5", "CSS3 (Flexbox, Grid)", "JavaScript (ES6+)", "Responsive Web Design", "UI/UX Principles", "Version Control (Git Basics)"],
+            studyLink: "https://aitaurangabad.com/courses/frontend"
+        },
+        {
+            title: "Learn Photoshop",
+            desc: "Master image editing, graphic design principles, and creative manipulation with Adobe Photoshop.",
+            duration: "2 months",
+            img: "img/Learn Photoshop.png",
+            icon: "fas fa-paint-brush",
+            syllabus: ["Photoshop Interface & Tools", "Layers, Masks, & Selections", "Image Retouching & Correction", "Creative Compositing", "Text & Shape Tools", "Exporting for Web & Print"],
+            studyLink: "file:///C:/Users/HP/OneDrive/Desktop/Project_AIT/Course%20Launching%20Soon.html"
+        },
+        
+        {
+            title: "Learn MS-Excel",
+            desc: "Become proficient in advanced Excel functions for data management, analysis, and reporting.",
+            duration: "1 month",
+            img: "img/Learn MS-Excel.png",
+            icon: "fas fa-file-excel",
+            syllabus: ["Excel Interface & Basics", "Formulas & Functions (Lookup, Logical, Text)", "Data Validation", "Conditional Formatting", "PivotTables & Charts"],
+            studyLink: "https://aitaurangabad.com/courses/excel"
+        }
+    ];
+
+    const container = document.getElementById('courses-container');
+    const searchInput = document.getElementById('courseSearch');
+
+    function displayCourses(filteredCourses) {
+        container.innerHTML = '';
+        filteredCourses.forEach((course, index) => {
+            const syllabusItemsHtml = course.syllabus.map(item => `<li><i class="fas fa-check-circle"></i> ${item}</li>`).join('');
+            container.innerHTML += `
+                <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="${index * 50}">
+                    <div class="card course-card h-100">
+                        <img src="${course.img}" class="card-img-top" alt="${course.title}">
+                        <div class="card-body">
+                            <i class="${course.icon} card-icon mb-3"></i>
+                            <h5 class="card-title">${course.title}</h5>
+                            <p class="card-description">${course.desc}</p>
+                            <p class="card-duration"><strong>Duration:</strong> ${course.duration}</p>
+                            <div class="accordion accordion-flush flex-grow-1" id="accordionFlush${index}">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-heading${index}">
+                                        <button class="accordion-button collapsed btn-syllabus" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse${index}" aria-expanded="false" aria-controls="flush-collapse${index}">
+                                            View Syllabus
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapse${index}" class="accordion-collapse collapse" aria-labelledby="flush-heading${index}" data-bs-parent="#accordionFlush${index}">
+                                        <div class="accordion-body">
+                                            <ul class="syllabus-list">
+                                                ${syllabusItemsHtml}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="${course.studyLink}" class="btn btn-study-course mt-2">Study Course</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredCourses = courses.filter(course => 
+            course.title.toLowerCase().includes(searchTerm)
+        );
+        displayCourses(filteredCourses);
+    });
+
+    // Initial display of all courses
+    displayCourses(courses);
+</script>
+</body>
+</html>

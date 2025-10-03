@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Launching Soon</title>
+    <!-- Tailwind CSS CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font for a professional look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS for glowing effects, typewriter, and background animation */
+        :root {
+            --dark-bg: #000033; /* Deep Navy */
+            --primary-color: #FFC107; /* Amber Gold */
+            --secondary-color: #FFD700; /* Standard Gold */
+            --accent-color: #FFEB3B;  /* Light Gold */
+            --dot-animation-duration: 1.5s;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 50% 10%, #00004d, var(--dark-bg) 60%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            transition: background-color 0.5s ease-in-out;
+        }
+
+        .content-card {
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
+            max-width: 800px;
+            width: 95%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dot animation for the loading text */
+        .loading-dots::after {
+            content: '';
+            animation: dot-animation var(--dot-animation-duration) infinite step-start both;
+        }
+
+        @keyframes dot-animation {
+            0%, 20% { content: '.'; }
+            30%,40% { content:'..'}
+            50%,60% { content:'...'}
+            70%,80% { content:'....'}
+            90%, 100% { content: '......'; }
+
+        }
+
+        /* Pulse glow for the loading text container */
+        .pulse-glow {
+            animation: pulse-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 rgba(255, 215, 0, 0.4); }
+            70% { box-shadow: 0 0 15px 10px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        /* Call-to-action button */
+        .notify-btn {
+            background-image: linear-gradient(to right, #FFD700, #FFC107, #FFEB3B);
+            background-size: 200% auto;
+            transition: background-position 0.5s ease;
+        }
+        .notify-btn:hover {
+            background-position: right center;
+        }
+
+        /* Tagline animation */
+        .tagline {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+        
+        .fade-in {
+            opacity: 1;
+        }
+
+    </style>
+</head>
+<body class="p-4">
+    <div class="content-card flex flex-col items-center justify-center p-8 rounded-3xl">
+        
+        <!-- Main Hero Heading -->
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">
+            We're crafting something special for you.
+        </h1>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-semibold mb-8 text-gray-100">
+            Course available shortly!
+        </h2>
+
+        <!-- Loading Animation & Text Container -->
+        <div id="loading-container" class="flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-700 ease-in-out transform opacity-100 scale-100">
+            <!-- Loader SVG -->
+            <svg class="animate-spin text-accent-color h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <!-- Animated Loading Text -->
+            <h5 id="loading-text" class="text-xl sm:text-2xl text-gray-200 loading-dots">
+                Knowledge is loading
+            </h5>
+        </div>
+
+        <!-- Tagline -->
+        <p id="tagline" class="tagline text-lg md:text-xl italic mt-8 text-yellow-300">
+            Launching soon: Learn, grow, and transform.
+        </p>
+
+        <!-- Call-to-action button -->
+        <button id="notify-btn" class="notify-btn mt-8 px-8 py-3 rounded-full text-lg font-bold text-black shadow-lg transition-all transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-500 focus:ring-opacity-50">
+           <a href="AIT Courses.html"> Back to Course</a>
+        </button>
+
+    </div>
+
+    <script>
+        window.onload = function() {
+            const loadingText = document.getElementById('loading-text');
+            const tagline = document.getElementById('tagline');
+            const loadingContainer = document.getElementById('loading-container');
+            const notifyBtn = document.getElementById('notify-btn');
+
+            // Listen for the end of the dot animation
+            // Using a simple setTimeout based on the animation duration
+            setTimeout(() => {
+                // Hide the loading container with a fade/scale effect
+                loadingContainer.classList.remove('opacity-100', 'scale-100');
+                loadingContainer.classList.add('opacity-0', 'scale-90');
+
+                setTimeout(() => {
+                    // Make the tagline and button visible
+                    tagline.classList.add('fade-in');
+                    notifyBtn.classList.add('fade-in');
+                }, 500); // Wait for the loading container to fade out
+            }, 3000); // Wait for a few cycles of the dot animation to feel complete
+            
+            // Add a simple click handler for the notify button
+            notifyBtn.addEventListener('click', () => {
+                console.log("Notify Me button clicked! A form would appear here to collect contact info.");
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Coming Soon - AIT</title>
+        <!-- Favicon -->
+   <!-- Favicon Icon (32x32, with round background) -->
+<link rel="icon" 
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23000000'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' font-weight='bold' fill='%23FFFFFF'%3EAIT%3C/text%3E%3C/svg%3E">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Font - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            /* Radial gradient background from user's code */
+            background: radial-gradient(circle at top, #0a6cff, #012b69);
+            color: white;
+            text-align: center;
+            overflow: hidden; /* Prevent scroll due to animations */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* For absolute positioning of logo and shapes */
+        }
+
+        .main-container {
+            position: relative;
+            z-index: 5; /* Ensure content is above background elements */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        /* AIT Logo at the top */
+        .ait-top-logo {
+            position: absolute;
+            top: 1.5rem; /* Adjusted for better spacing */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px; /* Default width */
+            height: auto;
+            max-width: 80%; /* Ensure it doesn't overflow on small screens */
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards; /* Delayed fade in */
+            z-index: 10; /* Ensure logo is on top of everything */
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); /* Subtle shadow for the logo */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.08); /* More subtle transparent card */
+            border-radius: 25px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
+            backdrop-filter: blur(8px); /* Frosted glass effect */
+            animation: cardSlideIn 1.2s ease-out forwards;
+            width: 100%;
+            max-width: 500px; /* Max width for the card */
+        }
+
+        @keyframes cardSlideIn {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .coming-text {
+            font-size: 3.5rem; /* Slightly smaller for better fit in card */
+            font-weight: 900;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ffffff, #b0d5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+            animation: glow 2s infinite alternate;
+            line-height: 1.1; /* Adjust line height */
+            margin-bottom: 1rem;
+        }
+
+        .course-tagline {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0px 0px 20px #00c3ff, 0px 0px 40px #0066ff; }
+            to { text-shadow: 0px 0px 30px #ffffff, 0px 0px 60px #00a2ff; }
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent; /* Smaller triangle */
+            border-right: 150px solid transparent;
+            border-bottom: 250px solid rgba(255,255,255,0.08); /* More subtle color */
+            position: absolute;
+            top: 25%; /* Adjusted placement */
+            left: 20%; /* Adjusted placement */
+            animation: rotateTriangle 10s linear infinite; /* Slower rotation */
+            z-index: 1; /* Behind the main card */
+            filter: blur(2px); /* Slightly blurred */
+        }
+
+        .triangle-2 { /* A second triangle for more depth */
+            width: 0;
+            height: 0;
+            border-left: 100px solid transparent;
+            border-right: 100px solid transparent;
+            border-bottom: 180px solid rgba(255,255,255,0.05);
+            position: absolute;
+            bottom: 20%;
+            right: 15%;
+            animation: rotateTriangle 12s reverse linear infinite; /* Reverse and slower */
+            z-index: 1;
+            filter: blur(1px);
+        }
+
+        @keyframes rotateTriangle {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.05); } /* Slight scale change */
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .btn-custom {
+            margin-top: 25px;
+            padding: 14px 35px; /* Slightly smaller padding */
+            font-size: 1.1rem;
+            font-weight: 700; /* More bold */
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(90deg, #00c3ff, #0066ff);
+            color: #fff;
+            box-shadow: 0px 0px 20px rgba(0,195,255,0.6);
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(90deg, #0066ff, #00c3ff);
+            box-shadow: 0px 0px 30px rgba(0,195,255,1);
+            transform: scale(1.07); /* More pronounced hover effect */
+        }
+
+        .btn-secondary-custom {
+            margin-top: 15px; /* Spacing between buttons */
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2); /* Transparent white background */
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary-custom:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Removed .countdown styling as the element is removed */
+
+        /* Floating Bubbles Animation */
+        .bubble {
+            position: absolute;
+            bottom: -100px;
+            background: rgba(255,255,255,0.15); /* More subtle bubble color */
+            border-radius: 50%;
+            animation: rise 10s infinite ease-in;
+            z-index: 0; /* Ensure bubbles are in the background */
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-1500px) scale(0.5); opacity: 0; } /* Bubbles rise higher */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .ait-top-logo {
+                width: 70px; /* Smaller logo for mobile */
+                top: 1rem;
+            }
+            .coming-text {
+                font-size: 2.5rem; /* Smaller text for mobile */
+            }
+            .course-tagline {
+                font-size: 1.2rem;
+            }
+            /* Removed .countdown adjustments for mobile */
+            .course-card {
+                padding: 1.8rem 1rem;
+                border-radius: 20px;
+            }
+            .btn-custom, .btn-secondary-custom {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            .triangle, .triangle-2 {
+                border-left: 80px solid transparent;
+                border-right: 80px solid transparent;
+                border-bottom: 150px solid rgba(255,255,255,0.08);
+            }
+            .triangle { top: 10%; left: 5%; }
+            .triangle-2 { bottom: 5%; right: 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- AIT Logo (Top Center) -->
+    <!-- Replace 'https://placehold.co/120x80/ffffff/000000?text=AIT%20Logo' with your actual AIT logo image URL -->
+    
+
+    <div class="main-container">
+        <!-- Background Triangles -->
+        <div class="triangle"></div>
+        <div class="triangle-2"></div>
+
+        <div class="course-card">
+            <h1 class="coming-text">Course Coming Soon</h1>
+            <p class="course-tagline">Prepare for an exciting new learning journey!</p>
+            <!-- Removed the countdown paragraph -->
+
+            <div class="d-flex flex-column align-items-center">
+               
+                <button class="btn-secondary-custom" onclick="goBack()">
+                    ← Back to Previous Page
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating bubbles -->
+    <script>
+        // Function to create and animate bubbles
+        function createBubble() {
+            let bubble = document.createElement("div");
+            bubble.classList.add("bubble");
+            bubble.style.left = Math.random() * window.innerWidth + "px";
+            bubble.style.animationDuration = (5 + Math.random() * 8) + "s"; // Random duration for variety
+            bubble.style.width = bubble.style.height = (15 + Math.random() * 25) + "px"; // Random size
+            document.body.appendChild(bubble);
+
+            // Remove bubble after animation ends to prevent DOM clutter
+            bubble.addEventListener('animationend', () => {
+                bubble.remove();
+                createBubble(); // Create a new one to maintain the effect
+            });
+        }
+
+        // Create initial bubbles
+        for (let i = 0; i < 20; i++) { // Increased number of bubbles
+            createBubble();
+        }
+
+        // Removed the countdown timer JavaScript
+        // The previous countdown logic has been removed as requested.
+
+        function goBack() {
+            // This function attempts to go back in the browser history.
+            // If there's no history (e.g., first page opened), it won't do anything.
+            history.back();
+        }
+    </script>
+</body>
+</html>

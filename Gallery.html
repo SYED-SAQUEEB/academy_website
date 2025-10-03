@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIT Academy Gallery</title>
+      <!-- Favicon -->
+   <!-- Favicon Icon (32x32, with round background) -->
+<link rel="icon" 
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%23000000'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='14' font-weight='bold' fill='%23FFFFFF'%3EAIT%3C/text%3E%3C/svg%3E">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Poppins Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- AOS for Animations -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <!-- Font Awesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* General Styles */
+        :root {
+            --white: #ffffff;
+            --sky-blue: #87CEEB;
+            --light-sky: #F0F9FF;
+            --navy: #0A2647;
+            --dark-text: #1F2937;
+            --mid-gray: #4B5563;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light-sky);
+            color: var(--dark-text);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5 {
+            color: var(--navy);
+            font-weight: 700;
+        }
+        
+        /* Utility Classes */
+        .text-justify {
+            text-align: justify;
+        }
+
+        /* Header & Footer */
+        .navbar {
+            background: linear-gradient(90deg, var(--white), var(--sky-blue));
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand img {
+            height: 50px;
+        }
+        
+        .nav-link {
+            font-weight: 600;
+            color: var(--navy) !important;
+            margin-right: 15px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: var(--navy);
+            transition: width 0.4s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+            background: var(--navy);
+        }
+
+        .nav-link:hover {
+            color: var(--mid-gray) !important;
+        }
+
+        footer {
+            background: linear-gradient(90deg, var(--white), var(--sky-blue));
+            color: var(--dark-text);
+            padding: 40px 0;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        footer a {
+            color: var(--navy);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--mid-gray);
+        }
+
+        .social-icons a {
+            display: inline-block;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            transition: transform 0.5s ease-in-out, box-shadow 0.3s ease;
+            color: var(--white);
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.1) rotateY(180deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Bouncing Animation for social icons */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .social-icons a:nth-child(1) { animation: bounce 2s ease-out 1s infinite; }
+        .social-icons a:nth-child(2) { animation: bounce 2s ease-out 1.2s infinite; }
+        .social-icons a:nth-child(3) { animation: bounce 2s ease-out 1.4s infinite; }
+        .social-icons a:nth-child(4) { animation: bounce 2s ease-out 1.6s infinite; }
+
+        /* Social Icon Colors */
+        .social-icons .icon-instagram {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+        }
+        .social-icons .icon-facebook { 
+            background: #1877F2; 
+        }
+        .social-icons .icon-linkedin { 
+            background: #0077B5; 
+        }
+        .social-icons .icon-twitter { 
+            background: #000; 
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .hero-section h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 10px;
+        }
+
+        .hero-section p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--mid-gray);
+        }
+
+        /* Gallery Sections */
+        .gallery-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--mid-gray);
+            margin-bottom: 50px;
+        }
+
+        .gallery-image {
+            border-radius: 15px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Why Choose AIT Section */
+        .why-ait-section {
+            padding: 60px 0;
+        }
+
+        /* Successful Journeys Section */
+        .video-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-card video {
+            width: 100%;
+            border-bottom: 1px solid #eee;
+        }
+
+        .video-card-body {
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar navbar-expand-lg sticky-top">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="img/New_Ait_Logo.png" alt="AIT Logo" >
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="About AIT.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="AIT Courses.html">Courses</a></li>
+                        <li class="nav-item"><a class="nav-link" href="AITSyllabus.html">Syllabus</a></li>
+                        <li class="nav-item"><a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSf9HnApVLCZcD2fW4zsMcFSjC52jMZEJF1RtSzrTumoYKGCRQ/viewform">Admission</a></li>
+                        <li class="nav-item"><a class="nav-link" href="https://aitaurangabad.com/UserPanel/Login.aspx">Student Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Exam.html">Exam</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Contact Us.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" data-aos="fade-up">
+        <div class="container">
+            <h1>Discover Our Academy’s Moments</h1>
+            <p> AIT Academy, we not only focus on technical skills but also emphasize personal growth and career readiness, ensuring that our students are well-equipped for the ever-evolving tech landscape.</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section (6 rows) -->
+    <section id="gallery" class="gallery-section">
+        <div class="container">
+            <!-- Row 1: Big Left, Small Right -->
+            <div class="row g-4 mb-4" data-aos="fade-up">
+                <div class="col-lg-6">
+                    <img src="img/Welcome zia Siddiqui.png" class="img-fluid gallery-image w-100" alt="Collaborative Projects">
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-6"><img src="img/Coding Compidition_1.png" class="img-fluid gallery-image w-100" alt="Workshop"></div>
+                        <div class="col-6"><img src="img/Coding Compidition_1.2.png" class="img-fluid gallery-image w-100" alt="Classroom"></div>
+                        <div class="col-12"><img src="img/Coding Compidition_1.1.png" class="img-fluid gallery-image w-100" alt="Guest Speaker"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 2: Small Left, Big Right -->
+            <div class="row g-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-6">
+                    <img style="margin-top: -255px;" src="img/Ait Staff Meet.png" class="img-fluid gallery-image w-100" alt="Coding Competition">
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-6"><img src="img/AIT Certificate 2022.png" class="img-fluid gallery-image w-100" alt="Graduation"></div>
+                        <div class="col-6"><img src="img/AIT Certificate 2023.png" class="img-fluid gallery-image w-100" alt="Lab Session"></div>
+                         
+                        
+                    </div>
+                </div>
+            
+            </div>
+
+            <!-- Row 3: Big Left, Small Right -->
+            <div class="row g-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-6">
+                    <img src="img/Lab.png" class="img-fluid gallery-image w-100" alt="Certification Ceremony">
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-6"><img src="img/AIT Certificate 2024.png" class="img-fluid gallery-image w-100" alt="Group Photo"></div>
+                        <div class="col-6"><img src="img/AIT Certificate 2025.png" class="img-fluid gallery-image w-100" alt="Seminar"></div>
+                        <div class="col-12"><img src="img/Khan Arbaaz.png" class="img-fluid gallery-image w-100" alt="Career Day"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Row 4: Small Left, Big Right -->
+            <div class="row g-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="col-lg-6">
+                    <div style="margin-Top: -355px;" class="row g-4">
+                        <div class="col-6"><img src="img/Mock Interview.png" class="img-fluid gallery-image w-100" alt="Student Project"></div>
+                        <div class="col-6"><img src="img/Mock Interview 1.23.png" class="img-fluid gallery-image w-100" alt="Alumni Meet"></div>
+                       
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Row 5: Big Left, Small Right -->
+            <div class="row g-4 mb-4" data-aos="fade-up" data-aos-delay="400">
+                <div class="col-lg-6">
+                    <img src="img/Zeeshan.png" class="img-fluid gallery-image w-100" alt="Cultural Event">
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-6"><img src="img/Kazim.png" class="img-fluid gallery-image w-100" alt="Hackathon"></div>
+                        <div class="col-6"><img src="img/Cong.png" class="img-fluid gallery-image w-100" alt="Team Building"></div>
+                        <div class="col-12"><img src="https://placehold.co/800x400/F0F9FF/0A2647?text=Diwali+Celebration" class="img-fluid gallery-image w-100" alt="Diwali Celebration"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Row 6: Small Left, Big Right -->
+            <div class="row g-4 mb-4" data-aos="fade-up" data-aos-delay="500">
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-6"><img src="https://placehold.co/400x300/F0F9FF/0A2647?text=Student+Ambassador" class="img-fluid gallery-image w-100" alt="Student Ambassador"></div>
+                        <div class="col-6"><img src="https://placehold.co/400x300/F0F9FF/0A2647?text=Leadership+Talk" class="img-fluid gallery-image w-100" alt="Leadership Talk"></div>
+                        <div class="col-12"><img src="https://placehold.co/800x400/F0F9FF/0A2647?text=Work+Life+Balance" class="img-fluid gallery-image w-100" alt="Work Life Balance"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://placehold.co/800x600/87CEEB/0A2647?text=Final+Projects" class="img-fluid gallery-image w-100" alt="Final Projects">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- First Why Choose AIT Section -->
+    <section class="why-ait-section bg-white" data-aos="fade-up">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h2 class="section-title text-start">Why Choose AIT? The Perfection We Give.</h2>
+                    <p class="text-justify">
+                        At AIT, we blend innovation with excellence. Our faculty are industry leaders who ensure you gain both knowledge and skills. With modern labs, real-world projects, and personalized mentorship, we nurture every student's growth. Our strong community fosters collaboration and creativity, empowering you to think beyond boundaries. Choosing AIT means choosing a future of possibilities, built on quality, passion, and perfection. Join us and be part of a transformative educational journey that focuses on your success.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="https://placehold.co/600x400/F0F9FF/0A2647?text=AIT+Difference" class="img-fluid gallery-image" alt="AIT Difference">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Second Gallery Section (2 rows) -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="row g-4 mb-4" data-aos="fade-up">
+                <div class="col-lg-6">
+                    <img src="https://placehold.co/800x600/FFD700/0A2647?text=Student+Showcase" class="img-fluid gallery-image w-100" alt="Student Showcase">
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-6"><img src="https://placehold.co/400x300/F0F9FF/0A2647?text=Campus+Tour" class="img-fluid gallery-image w-100" alt="Campus Tour"></div>
+                        <div class="col-6"><img src="https://placehold.co/400x300/F0F9FF/0A2647?text=Group+Discussion" class="img-fluid gallery-image w-100" alt="Group Discussion"></div>
+                        <div class="col-12"><img src="https://placehold.co/800x400/F0F9FF/0A2647?text=Open+House" class="img-fluid gallery-image w-100" alt="Open House"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-6"><img src="https://placehold.co/400x300/F0F9FF/0A2647?text=Job+Fair" class="img-fluid gallery-image w-100" alt="Job Fair"></div>
+                        <div class="col-6"><img src="https://placehold.co/400x300/F0F9FF/0A2647?text=Project+Review" class="img-fluid gallery-image w-100" alt="Project Review"></div>
+                        <div class="col-12"><img src="https://placehold.co/800x400/F0F9FF/0A2647?text=Student+Life" class="img-fluid gallery-image w-100" alt="Student Life"></div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://placehold.co/800x600/87CEEB/0A2647?text=Interactive+Session" class="img-fluid gallery-image w-100" alt="Interactive Session">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Second Why Choose AIT Section -->
+    <section class="why-ait-section" data-aos="fade-up">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0 order-md-2">
+                    <h2 class="section-title text-start">Why Choose AIT? The Perfection We Give.</h2>
+                    <p class="text-justify">
+                        At AIT, we blend innovation with excellence. Our faculty are industry leaders who ensure you gain both knowledge and skills. With modern labs, real-world projects, and personalized mentorship, we nurture every student's growth. Our strong community fosters collaboration and creativity, empowering you to think beyond boundaries. Choosing AIT means choosing a future of possibilities, built on quality, passion, and perfection. Join us and be part of a transformative educational journey that focuses on your success.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center order-md-1">
+                    <img src="https://placehold.co/600x400/F0F9FF/0A2647?text=AIT+Excellence" class="img-fluid gallery-image" alt="AIT Excellence">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Successful Journeys Section -->
+    <section class="gallery-section bg-white" data-aos="fade-up">
+        <div class="container">
+            <h2 class="section-title">Successful Journeys</h2>
+            <p class="section-subtitle">Congratulations to our students on their incredible achievements! We wish you all the best for a successful journey in the future.</p>
+            <div class="row g-4">
+                <!-- Video Card 1 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="video-card">
+                        <video class="w-100" controls src="https://www.w3schools.com/html/mov_bbb.mp4" poster="https://placehold.co/600x400/FFD700/0A2647?text=Video+Thumbnail+1"></video>
+                        <div class="video-card-body">
+                            <h5 class="fw-bold">Student A</h5>
+                            <p class="text-muted">Secured placement in top IT company with excellent performance.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video Card 2 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="video-card">
+                        <video class="w-100" controls src="https://www.w3schools.com/html/mov_bbb.mp4" poster="https://placehold.co/600x400/87CEEB/0A2647?text=Video+Thumbnail+2"></video>
+                        <div class="video-card-body">
+                            <h5 class="fw-bold">Student B</h5>
+                            <p class="text-muted">Presented research paper in international conference on AI.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Video Card 3 -->
+                <div class="col-md-6 col-lg-4 d-flex">
+                    <div class="video-card">
+                        <video class="w-100" controls src="https://www.w3schools.com/html/mov_bbb.mp4" poster="https://placehold.co/600x400/F0F9FF/0A2647?text=Video+Thumbnail+3"></video>
+                        <div class="video-card-body">
+                            <h5 class="fw-bold">Student C</h5>
+                            <p class="text-muted">Started own successful startup with innovation and creativity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>AIT Academy</h5>
+                    <p>Empowering the next generation of IT professionals with practical skills and industry-aligned training.</p>
+                    <div class="social-icons mt-3">
+                        <a href="https://www.instagram.com/a.i.t.aurangabad/" target="_blank" class="icon-instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/p/AIT-Academy-of-Infomation-Technology-61553413495331/" target="_blank" class="icon-facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        
+                        <a href="https://linkedin.com/company/aitaurangabad" target="_blank" class="icon-linkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About AIT.html">About Us</a></li>
+                        <li><a href="AIT Courses.html">Courses</a></li>
+                        <li><a href="AITSyllabus.html">Syllabus</a></li>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSf9HnApVLCZcD2fW4zsMcFSjC52jMZEJF1RtSzrTumoYKGCRQ/viewform">Admission</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt"></i> Opp Rehmaniya Masjid, Lane 6, Azad Chowk Rd, Rahemania Colony, Aurangabad - 431003, Maharashtra, INDIA</li>
+                        <li><i class="fas fa-phone"></i> Mobile: +91 9890579628, +91 9766866239</li>
+                        <li><i class="fas fa-envelope"></i> Email: info@aitaurangabad.com</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="mb-0" id="copyright-text"></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+
+        // Set the copyright text dynamically
+        document.getElementById('copyright-text').textContent = '© 2025 AIT Academy. All Rights Reserved.';
+    </script>
+</body>
+</html>
